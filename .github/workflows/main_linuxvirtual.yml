@@ -57,9 +57,9 @@ jobs:
           nslookup linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net
           curl -v https://linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net
 
-      - name: Delete files from /api1 directory using Kudu API
+      - name: Delete files from /api2 directory using Kudu API
         run: |
-          curl -X DELETE "https://linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net/api/vfs/site/wwwroot/api1" \
+          curl -X DELETE "https://linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net/api/vfs/site/wwwroot/api2/?recursive=true" \
           -H "Authorization: Basic $(echo -n ${{ secrets.KUDU_USERNAME }}:${{ secrets.KUDU_PASSWORD }} | base64)" \
           -v \
           --write-out "%{http_code}" \
@@ -72,3 +72,4 @@ jobs:
           app-name: 'linuxvirtual'
           slot-name: 'Production'
           package: ${{ github.workspace }}/myapp
+          clean : false
