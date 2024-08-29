@@ -48,16 +48,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7E1A4CB26C5547BABCFEFDD7584FE587 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0B3E8C14CD214452A6F0388E86D0E677 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8C9CDE3CE6AB4FABA297736325F9B0CE }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-      - name: Remove files from /api1 directory
+      - name: Delete files from /api1 directory using Kudu API
         run: |
-          az webapp ssh --name linuxvirtual --resource-group v-sirrasneha-mindtree --command "rm -rf /home/site/wwwroot/api1/*"
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-
+          curl -X DELETE "https://linuxvirtual.scm.azurewebsites.net/api/vfs/site/wwwroot/api1" \
+          -H "Authorization: Basic $(echo -n ${{ secrets.KUDU_APPPATH }}:${{ secrets.KUDU_RUN_USER }} | base64)"
+      
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
