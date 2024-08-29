@@ -51,6 +51,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7E1A4CB26C5547BABCFEFDD7584FE587 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0B3E8C14CD214452A6F0388E86D0E677 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8C9CDE3CE6AB4FABA297736325F9B0CE }}
+
       - name: Debug connectivity to Kudu
         run: |
           nslookup linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net
@@ -59,7 +60,7 @@ jobs:
       - name: Delete files from /api1 directory using Kudu API
         run: |
           curl -X DELETE "https://linuxvirtual-dqa2hggacehwggdt.scm.eastus-01.azurewebsites.net/api/vfs/site/wwwroot/api1" \
-          -H "Authorization: Basic $(echo -n ${{ secrets.KUDU_USERNAME }}:${{ secrets.KUDU_PASSWORD }} | base64)" \
+          -H "Authorization: Basic $(echo -n ${{ secrets.KUDU_RUN_USER }}: | base64)" \
           -v
       
       - name: Deploy to Azure Web App
@@ -68,4 +69,4 @@ jobs:
         with:
           app-name: 'linuxvirtual'
           slot-name: 'Production'
-          package: .
+          package: ${{ github.workspace }}/myapp
