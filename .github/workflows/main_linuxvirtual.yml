@@ -52,7 +52,7 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0B3E8C14CD214452A6F0388E86D0E677 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8C9CDE3CE6AB4FABA297736325F9B0CE }}
 
-      - name: Clean up target virtual directory (api1)
+      - name: Remove files from /api1 directory
         run: |
           az webapp ssh --name linuxvirtual --resource-group v-sirrasneha-mindtree --command "rm -rf /home/site/wwwroot/api1/*"
         env:
