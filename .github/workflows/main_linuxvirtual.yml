@@ -54,7 +54,7 @@ jobs:
 
       - name: Delete files from /api1 directory using Kudu API
         run: |
-          curl -X DELETE "https://linuxvirtual.scm.azurewebsites.net/api/vfs/site/wwwroot/api1" \
+          curl -X DELETE "https://linuxvirtual-dqa2hggacehwggdt.scm.azurewebsites.net/api/vfs/site/wwwroot/api1" \
           -H "Authorization: Basic $(echo -n ${{ secrets.KUDU_USERNAME }}:${{ secrets.KUDU_PASSWORD }} | base64)"
       
       - name: Deploy to Azure Web App
