@@ -71,5 +71,5 @@ jobs:
         with:
           app-name: 'linuxvirtual'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/myapp
+          package: .
           clean : false
